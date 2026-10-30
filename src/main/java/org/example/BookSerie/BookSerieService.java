@@ -15,14 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookSerieService {
     private final BookSerieRepository bookSerieRepository;
-    private final UserService userService;
 
-    public Long createBookSerie(BookSerieCreationDTO dto) {
-        User owner = userService.findById(dto.getOwnerId());
+    public Long createBookSerie(BookSerieCreationDTO dto, User user) {
 
         BookSerie bookSerie = new BookSerie();
         bookSerie.setName(dto.getName());
-        bookSerie.setOwner(owner);
+        bookSerie.setOwner(user);
 
         return bookSerieRepository.save(bookSerie).getId();
     }

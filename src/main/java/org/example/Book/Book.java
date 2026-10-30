@@ -1,12 +1,13 @@
 package org.example.Book;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.BookSerie.BookSerie;
+import org.example.User.User;
+
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -19,5 +20,16 @@ public class Book {
 
     private String name ;
 
+    @ManyToOne
+    private User owner;
+
+    @ManyToOne
+    @JoinColumn(name = "book_serie")
+    private BookSerie bookSerie;
+
+    private Double price;
+
+    @Column(name = "published_date")
+    private LocalDate publishedDate;
 
 }

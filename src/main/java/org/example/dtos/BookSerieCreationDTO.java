@@ -14,6 +14,4 @@ public class BookSerieCreationDTO {
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotNull(message = "Owner ID is required")
-    private Long ownerId;
 }

@@ -75,8 +75,7 @@ public class UserService {
     public LoginResponse login(LoginRequest loginRequest) {
         String email = loginRequest.getEmail().toLowerCase().trim();
 
-        Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, loginRequest.getPassword()));
+        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, loginRequest.getPassword()));
 
         User user = (User) auth.getPrincipal();
 

@@ -8,4 +8,8 @@ import java.util.List;
 @Repository
 public interface BookSerieRepository extends JpaRepository<BookSerie, Long> {
     List<BookSerie> findByOwnerId(Long ownerId);
+
+    BookSerie findByIdAndOwnerId(Long id, Long ownerId);
+
+    Boolean existsByIdAndOwnerId(Long id, Long ownerId);
 }
