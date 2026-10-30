@@ -6,7 +6,7 @@ import org.example.User.UserService;
 import org.example.dtos.BookSerieCreationDTO;
 import org.example.dtos.BookSerieUpdateDTO;
 import org.example.dtos.BookSerieViewDTO;
-import org.example.exceptions.ResourceNotFoundException;
+import org.example.utils.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

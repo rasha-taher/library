@@ -5,10 +5,11 @@ import org.example.User.login.LoginRequest;
 import org.example.User.login.LoginResponse;
 import org.example.dtos.UserCreationDTO;
 import org.example.dtos.UserViewDTO;
-import org.example.exceptions.EmailAlreadyExistsException;
-import org.example.exceptions.InvalidPassword;
-import org.example.exceptions.ResourceNotFoundException; // CHANGED: replaces the java.util.NoSuchElementException import
+import org.example.utils.exceptions.EmailAlreadyExistsException;
+import org.example.utils.exceptions.InvalidPassword;
+import org.example.utils.exceptions.ResourceNotFoundException; // CHANGED: replaces the java.util.NoSuchElementException import
 import org.example.utils.JwtService;
+import org.example.utils.RefreshToken.RefreshTokenService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +27,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
 
     private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,64}$";
@@ -79,6 +81,6 @@ public class UserService {
         User user = (User) auth.getPrincipal();
 
 
-        return new LoginResponse(user.getId(), user.getEmail(), user.getRole(), jwtService.generateAccessToken(user), jwtService.generateRefreshToken(user));
+        return new LoginResponse(user.getId(), user.getEmail(), user.getRole(), jwtService.generateAccessToken(user), refreshTokenService.createRefreshToken(user));
     }
 }

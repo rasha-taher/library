@@ -11,7 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -49,6 +52,7 @@ public class JwtService {
 
     public String generateRefreshToken(UserDetails userDetails){
         return Jwts.builder()
+                .id(UUID.randomUUID().toString())      // <-- the new line (the jti claim)
                 .subject(userDetails.getUsername())
                 .claim("type", REFRESH)
                 .issuedAt(new Date())
@@ -77,5 +81,10 @@ public class JwtService {
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public LocalDateTime extractExpiration(String token) {
+        return extractAllClaims(token).getExpiration().toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 }
